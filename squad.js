@@ -57,7 +57,7 @@ const versionFetch = async () => {
     }
     const rawtext = await response.text();
     const VERSION = rawtext.substring(rawtext.search("narrowClient") + 12, rawtext.search("narrowClient") + 22); 
-    console.log(VERSION);
+    //console.log(VERSION);
     return VERSION;
   } catch (error) {
     console.error('Error fetching version:', error);
@@ -156,8 +156,8 @@ const main = async () => {
     console.error(error);
   }
 
-  const VERSION = await versionFetch();
-  if (VERSION) {
+ // const VERSION = await versionFetch();
+  
     client.login(token);
     client.on(Events.ClientReady, () => {
       console.log(`Ready Logged in as ${client.user.tag}`);
@@ -170,6 +170,7 @@ const main = async () => {
         const setting = interaction.options.getString('setting');
         if (setting === 'public') {
           try {
+           const VERSION = await versionFetch();
             const squadId = await squadcodepublic(VERSION);
             interaction.reply(`Less Go Guy's Join publicSquad \n https://narrow.one/#${squadId}`);
           } catch (error) {
@@ -178,6 +179,7 @@ const main = async () => {
           }
         } else if (setting === 'private') {
           try {
+            const VERSION = await versionFetch();
             const squadId = await squadcodeprivate(VERSION);
             interaction.reply(`Less Go Guy's Join privateSquad \n https://narrow.one/#${squadId}`);
           } catch (error) {
@@ -187,7 +189,7 @@ const main = async () => {
         }
       }
     });
-  }
+  
 };
 
 main();
